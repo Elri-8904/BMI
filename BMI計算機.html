@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            box-sizing: border-box;
+            background-image: url(./img/sport.webp);
+            background-repeat: no-repeat;
+            background-position:top;
+            background-size: cover;
+            margin: 0;
+
+        }
+        main{
+            display: flex;
+            flex-direction:column;
+
+        }
+        .container{
+            margin: auto;
+            margin-top: 50px;
+            width: 550px;
+            Height: 220px;
+            background-color:rgb(235, 235, 235);
+            padding: 30px 50px;
+            opacity: 90%;
+            border-radius: 20px;
+            border: 3px solid rgb(186, 186, 186);
+
+        }
+        .bar{
+            width: 100%;
+            Height: 70px;
+            margin: auto;
+            background-color: rgb(255, 205, 188);
+            border-radius: 30px;
+            text-align: center;
+            font-size: 50px;
+            padding-top: 5px;
+        }
+        h3{
+            display: flex;
+            font-size: 30px;
+            margin: 10px  0 0 0 ;
+            color: rgb(23, 22, 22);
+        }
+        input{
+            border-radius: 20px;
+            display: flex;
+            margin: 10px  0 0 0 ;
+            Height: 20px;
+        }
+        button{
+            width: 70px;
+            Height: 30px;
+            border-radius: 10px;
+            margin: 20px  0 ;
+            font-Weight: 600;
+            font-size: 20px;
+        }
+        .output {
+            font-size: 25px;
+            opacity: 0;
+        }
+        
+        .act{
+            opacity: 1;
+        }
+        
+        
+
+
+    </style>
+</head>
+<body>
+    <main>
+    <div class="input container">
+        <div class="bar">BMI計算機</div>
+        <h3>身高(公分) : &nbsp; <input id="bodyHeight" type="text"></h3>
+        <h3>體重(公斤) : &nbsp; <input id="bodyWeight" type="text"></h3>
+        <!--資安問題不建議使用type="number"，雖然擋非數值很好用QQ-->
+        <button id="calculate">計算</button>
+        <button id="clear">清除</button>
+    </div>
+        <div class="output container">
+            <p>BMI為:<span  id="bmi"></span> </p>
+            <p>狀態: <span id="condition"></span> </p>
+            <p>建議: <span id="suggest"></span> </p>
+        </div>
+    </main>
+    <script>
+        const calculate = document.querySelector('#calculate')
+        const clear = document.querySelector('#clear')
+
+        const bodyHeight = document.querySelector('#bodyHeight')
+        const bodyWeight = document.querySelector('#bodyWeight')
+
+        const bmi = document.querySelector('#bmi')
+        const condition= document.querySelector('#condition')
+        const suggest = document.querySelector('#suggest')
+        
+        const output=document.querySelector('.output')
+
+        
+        
+        calculate.onclick = function(){
+            let bodyHeightvalue = bodyHeight.value;
+            let bodyWeightvalue = bodyWeight.value;
+
+            if(bodyHeightvalue == '' || bodyHeightvalue.trim() == '' || ! Number.isInteger(Number(bodyHeightvalue)) || bodyHeightvalue < 0 ||
+            bodyWeightvalue < 0 || bodyWeightvalue == '' || bodyWeightvalue.trim() == '' || ! Number.isInteger(Number(bodyWeightvalue)) ) {
+                alert('錯誤，請輸入正確數值(身高、bmi)')}
+            else {
+                let bmi_result= (bodyWeightvalue/((bodyHeightvalue/100)*(bodyHeightvalue/100))).toFixed(1);
+
+                    if( bmi_result < 18.5){
+                        condition.innerHTML= '過輕'
+                        suggest.innerHTML= '太瘦了!請多吃飯跟運動長肌肉!'
+                     }
+                     else if(bmi_result < 24){
+                        condition.innerHTML = '正常'
+                        suggest.innerHTML = '體態正常，請繼續保持'
+                     }
+                     else if(bmi_result < 27){
+                        condition.innerHTML = '過重'
+                        suggest.innerHTML = '有點吃太多了喔!請注意'
+                     }
+                     else if(bmi_result < 30){
+                        condition.innerHTML = '輕度肥胖'
+                        suggest.innerHTML = '開始擬定運動計畫吧!'
+                     }
+                     else if(bmi_result < 35){
+                        condition.innerHTML = '中度肥胖'
+                        suggest.innerHTML = '中度肥胖，運動計畫寫了沒，該動了!'
+                    }
+                     else if( bmi_result >=35){
+                        condition.innerHTML = '重度肥胖'
+                        suggest.innerHTML = '如果你還活在2020，你絕對可以先施打疫苗了'
+                    }
+
+                output.classList.add('act')
+            bmi.innerHTML = (bmi_result)}
+         
+        }
+        
+
+        clear.onclick = function () {
+            output.classList.remove('act')
+            bodyHeight.value =''
+            bodyWeight.value = ''
+            
+        }
+
+    </script>
+    
+</body>
+</html>
